@@ -9,6 +9,7 @@ getwd()
 ##TASK 1
 ##read data
 users<-read.csv("users.csv")
+reviews<-read.csv("reviews.csv")
 ##check/look at data
 head(users)
 ##Take members_since column and turn into dates
@@ -27,8 +28,10 @@ users<-users%>%
 ##check if column has been added
 head(users)
 
+reviewUsers<-left_join(reviews,users, by="user_id")
+
 ##make a summary table
-summaryTable<-users%>% group_by(typeOfUser)%>%
+summaryTable<-reviewUsers%>% group_by(typeOfUser)%>%
   summarise(
     userCount=n(),##count number of users
     avgRevStars=mean(average_stars, na.rm=TRUE),##calculate mean of average_stars
